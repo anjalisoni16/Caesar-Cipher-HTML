@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A professional interactive Caesar Cipher cryptography lab with encryption, decryption and brute-force analysis." />
+  <title>CaesarLab — Interactive Cryptography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="noise"></div>
+  <div class="grid-overlay"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-mark">C</span>
+      <span>
+        <strong>Caesar<span>Lab</span></strong>
+        <small>Interactive Cryptography</small>
+      </span>
+    </a>
+
+    <nav class="nav">
+      <a href="#lab">Cipher Lab</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <div class="status">
+      <span class="status-dot"></span>
+      LOCAL • NO DATA SENT
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">CRYPTOGRAPHY / CLASSICAL CIPHER</p>
+        <h1>Shift the alphabet.<br><span>Understand the weakness.</span></h1>
+        <p class="hero-text">
+          Encrypt, decrypt and brute-force Caesar Cipher messages in your browser.
+          Built as a hands-on security learning lab.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#lab">Open Cipher Lab <span>↓</span></a>
+          <button class="btn ghost" id="demoBtn">Load Demo</button>
+        </div>
+      </div>
+
+      <div class="cipher-visual reveal delay-1" aria-label="animated Caesar cipher visualization">
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="cipher-node node-a">A</div>
+        <div class="cipher-node node-b">D</div>
+        <div class="cipher-node node-c">X</div>
+        <div class="visual-core">
+          <span class="lock">↻</span>
+          <strong id="visualKey">03</strong>
+          <small>SHIFT</small>
+        </div>
+        <div class="arc-label label-a">PLAINTEXT</div>
+        <div class="arc-label label-b">CIPHERTEXT</div>
+      </div>
+    </section>
+
+    <section class="lab-section" id="lab">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow">01 / CIPHER LAB</p>
+          <h2>Encode & decode</h2>
+        </div>
+        <span class="section-note">All processing happens locally in your browser.</span>
+      </div>
+
+      <div class="workspace reveal delay-1">
+        <div class="panel input-panel">
+          <div class="panel-head">
+            <div>
+              <span class="panel-index">01</span>
+              <h3>Input message</h3>
+            </div>
+            <span class="char-count" id="charCount">0 chars</span>
+          </div>
+          <textarea id="inputText" placeholder="Type a message to encrypt or decrypt..."></textarea>
+          <div class="micro-actions">
+            <button id="clearBtn">Clear</button>
+            <button id="pasteBtn">Paste</button>
+          </div>
+        </div>
+
+        <div class="control-panel">
+          <div class="key-control">
+            <div class="panel-head compact">
+              <div>
+                <span class="panel-index">02</span>
+                <h3>Shift key</h3>
+              </div>
+              <output id="keyOutput">3</output>
+            </div>
+            <input id="keySlider" type="range" min="0" max="25" value="3" />
+            <div class="slider-labels"><span>0</span><span>13</span><span>25</span></div>
+          </div>
+
+          <div class="key-input-wrap">
+            <label for="keyInput">Exact key</label>
+            <input id="keyInput" type="number" min="0" max="25" value="3" />
+          </div>
+
+          <div class="mode-tabs" role="tablist" aria-label="Cipher mode">
+            <button class="mode active" data-mode="encrypt">Encrypt</button>
+            <button class="mode" data-mode="decrypt">Decrypt</button>
+          </div>
+
+          <button id="runBtn" class="run-btn">
+            <span class="run-icon">✦</span>
+            <span id="runLabel">Encrypt message</span>
+          </button>
+
+          <button id="swapBtn" class="swap-btn">↔ Swap input/output</button>
+        </div>
+
+        <div class="panel output-panel">
+          <div class="panel-head">
+            <div>
+              <span class="panel-index">03</span>
+              <h3>Output</h3>
+            </div>
+            <button class="copy-btn" id="copyBtn" title="Copy result">Copy</button>
+          </div>
+          <div id="outputText" class="output-box" aria-live="polite">
+            <span class="placeholder">Your transformed message will appear here.</span>
+          </div>
+          <div class="output-meta">
+            <span id="statusText">Ready</span>
+            <span id="outputCount">0 chars</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="analysis-section" id="analysis">
+      <div class="section-heading reveal">
+        <div>
+          <p class="eyebrow">02 / SECURITY ANALYSIS</p>
+          <h2>Why Caesar Cipher is weak</h2>
+        </div>
+      </div>
+
+      <div class="analysis-grid">
+        <article class="security-card reveal">
+          <span class="card-number">01</span>
+          <h3>Only 26 possible keys</h3>
+          <p>An attacker can test every possible shift extremely quickly. This is called a brute-force attack.</p>
+        </article>
+        <article class="security-card reveal delay-1">
+          <span class="card-number">02</span>
+          <h3>Preserves letter patterns</h3>
+          <p>The cipher does not hide frequency patterns, making the underlying language easier to recognize.</p>
+        </article>
+        <article class="security-card reveal delay-2">
+          <span class="card-number">03</span>
+          <h3>Not modern encryption</h3>
+          <p>Caesar Cipher is useful for learning cryptography concepts, but it provides no meaningful modern confidentiality.</p>
+        </article>
+      </div>
+
+      <div class="bruteforce reveal">
+        <div class="brute-head">
+          <div>
+            <p class="eyebrow">LIVE ATTACK SIMULATION</p>
+            <h3>Brute-force every possible key</h3>
+          </div>
+          <button class="btn primary small" id="bruteBtn">Run attack</button>
+        </div>
+        <p class="brute-description">Enter or encrypt a message first, then see how an attacker can enumerate all 26 shifts.</p>
+        <div id="bruteOutput" class="brute-output">
+          <div class="empty-state">No attack results yet.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="about-card reveal">
+        <div>
+          <p class="eyebrow">03 / LEARNING OBJECTIVES</p>
+          <h2>From algorithm to security mindset.</h2>
+        </div>
+        <div class="objectives">
+          <div><span>01</span>Understand substitution ciphers</div>
+          <div><span>02</span>Implement encryption & decryption</div>
+          <div><span>03</span>Demonstrate brute-force weakness</div>
+          <div><span>04</span>Connect cryptography to threat thinking</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>CaesarLab © 2026</span>
+    <span>Educational security project • Use only for authorized testing</span>
+  </footer>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
